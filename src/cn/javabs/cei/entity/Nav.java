@@ -1,10 +1,10 @@
 package cn.javabs.cei.entity;
 
-public class Column {
+public class Nav {
     //栏目id
     private int id;
     //栏目名字
-    private String columnName;
+    private String NavName;
     private int catId;
     private String categoryName;
 
@@ -16,12 +16,12 @@ public class Column {
         this.id = id;
     }
 
-    public String getColumnName() {
-        return columnName;
+    public String getNavName() {
+        return NavName;
     }
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
+    public void setNavName(String NavName) {
+        this.NavName = NavName;
     }
 
     public int getCatId() {
@@ -42,9 +42,9 @@ public class Column {
 
     @Override
     public String toString() {
-        return "Column{" +
+        return "Nav{" +
                 "id=" + id +
-                ", columnName='" + columnName + '\'' +
+                ", NavName='" + NavName + '\'' +
                 ", catId=" + catId +
                 ", categoryName='" + categoryName + '\'' +
                 '}';

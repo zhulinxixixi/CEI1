@@ -1,11 +1,11 @@
 package cn.javabs.cei.web.servlet;
 
 import cn.javabs.cei.entity.Category;
-import cn.javabs.cei.entity.Column;
+import cn.javabs.cei.entity.Nav;
 import cn.javabs.cei.service.CategoryService;
-import cn.javabs.cei.service.ColumnService;
+import cn.javabs.cei.service.NavService;
 import cn.javabs.cei.service.impl.CategoryServiceImpl;
-import cn.javabs.cei.service.impl.ColumnServiceImpl;
+import cn.javabs.cei.service.impl.NavServiceImpl;
 import cn.javabs.cei.util.NavUtil;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -19,11 +19,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-@WebServlet("/columnServlet")
-public class ColumnServlet extends HttpServlet {
+@WebServlet("/navServlet")
+public class NavServlet extends HttpServlet {
 
     CategoryService categoryService = new CategoryServiceImpl();
-    ColumnService columnService = new ColumnServiceImpl();
+    NavService navService = new NavServiceImpl();
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
@@ -38,70 +38,50 @@ public class ColumnServlet extends HttpServlet {
 
         String op = request.getParameter("op");
 
-        if (op.equals("addColumn")){
+        if (op.equals("addNav")){
             System.out.println("3");
-            addColumn(request,response);
+            addNav(request,response);
         }else if (op.equals("gotoShow")){
             System.out.println("1");
             gotoShow(request,response);
-        }else if(op.equals("findAllColumn")){
-            findAllColumn(request,response);
+        }else if(op.equals("findAllNav")){
+            findAllNav(request,response);
         }else if(op.equals("gotoAdd")){
             gotoAdd(request,response);
-        }else if("editColumn".equals(op)){
+        }else if("editNav".equals(op)){
 
-            editColumn(request,response);
+            editNav(request,response);
         } else if("gotoEdit".equals(op)){
 
             gotoEdit(request,response);
-        }else if("delColumn".equals(op)){
-            delColumn(request,response);
+        }else if("delNav".equals(op)){
+            delNav(request,response);
         } else {
             System.out.println("参数异常！");
         }
     }
-//删除
-    private void delColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    //删除
+    private void delNav(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
         int id = Integer.parseInt(request.getParameter("id"));
-        columnService.delColumn(id);
-        findAllColumn(request,response);
+        navService.delNav(id);
+        findAllNav(request,response);
 
     }
-
+//编辑
     private void gotoEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
 
         int id = Integer.parseInt(request.getParameter("id"));
-        Column column = columnService.findColumnById(id);
-        request.setAttribute("column",column);
+        Nav nav = navService.findNavById(id);
+        request.setAttribute("nav",nav);//setAttribute作用是保存数据
 
 
         List<Category> categories = categoryService.findAllCategory();
         request.setAttribute("categories",categories);
-
-
-
-        request.getRequestDispatcher("/backgroud/navigator/editColumn.jsp").forward(request,response);
-    }
-
-    private void editColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String colName = request.getParameter("columnName");
-        if(colName==null||colName==""){
-            gotoEdit(request,response);
-        }else {
-            int id = Integer.parseInt(request.getParameter("id"));
-            int catId = Integer.parseInt(request.getParameter("catId"));
-            Column column = new Column();
-            column.setId(id);
-            column.setColumnName(colName);
-            column.setCatId(catId);
-            columnService.updateColumn(column);
-            findAllColumn(request,response);
-        }
+        request.getRequestDispatcher("/backgroud/navigator/editNav.jsp").forward(request,response);
     }
 
     private void gotoAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -110,38 +90,55 @@ public class ColumnServlet extends HttpServlet {
         List<Category> categories = categoryService.findAllCategory();
         request.setAttribute("categories",categories);
 
-        request.getRequestDispatcher("/backgroud/navigator/addColumn.jsp").forward(request,response);
+        request.getRequestDispatcher("/backgroud/navigator/addNav.jsp").forward(request,response);
     }
 
-    private void findAllColumn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Column> columns = columnService.findAllColumn();
-        request.setAttribute("columns",columns);
-        System.out.println("columns="+columns);
-        request.getRequestDispatcher("/backgroud/navigator/columnList.jsp").forward(request,response);
+    private void editNav(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String colName = request.getParameter("navName");
+        if(colName==null||colName==""){
+            gotoEdit(request,response);
+        }else {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int catId = Integer.parseInt(request.getParameter("catId"));
+            Nav nav = new Nav();
+            nav.setId(id);
+            nav.setNavName(colName);
+            nav.setCatId(catId);
+            navService.updateNav(nav);
+            findAllNav(request,response);
+        }
     }
 
-    private void addColumn(HttpServletRequest request, HttpServletResponse response) {
+    private void findAllNav(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Nav> navs = navService.findAllNav();
+        request.setAttribute("navs",navs);
+        System.out.println("navs="+navs);
+        request.getRequestDispatcher("/backgroud/navigator/navList.jsp").forward(request,response);
+    }
+
+    private void addNav(HttpServletRequest request, HttpServletResponse response) {
 
 
-        Column column = new Column();
+        Nav nav = new Nav();
 
-        String columnName = request.getParameter("columnName");
+        String navName = request.getParameter("navName");
 
         String id = request.getParameter("catid");
 
         int catid = Integer.parseInt(id);
-        column.setColumnName(columnName);
-        column.setCatId(catid);
-        columnService.addColumn(column);
+        nav.setNavName(navName);
+        nav.setCatId(catid);
+//        navService.addNav(nav);
         try {
-            BeanUtils.populate(column,request.getParameterMap());
+            BeanUtils.populate(nav,request.getParameterMap());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        int rows = columnService.addColumn(column);
-            if(rows>0){
+        int rows = navService.addNav(nav);
+            if(rows!=0){
                 request.setAttribute("msg","添加栏目成功");
                 try {
                     request.getRequestDispatcher("/success.jsp").forward(request,response);
@@ -160,8 +157,6 @@ public class ColumnServlet extends HttpServlet {
                     e.printStackTrace();
                 }
             }
-
-
     }
 
     private void gotoShow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -173,7 +168,7 @@ public class ColumnServlet extends HttpServlet {
         System.out.println(categories);
 
 
-        request.getRequestDispatcher("/background/navigator/addColumn.jsp").forward(request,response);
+        request.getRequestDispatcher("/background/navigator/addNav.jsp").forward(request,response);
 
     }
 

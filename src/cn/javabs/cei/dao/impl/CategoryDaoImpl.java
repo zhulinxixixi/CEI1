@@ -17,7 +17,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try {
 
 
-            return qr.update("insert into category(categoryName) values(?);",category.getCategoryName());
+            return qr.update("insert into category(categoryName) values(?)",category.getCategoryName());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +36,8 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public int updateCategory(Category category) {
         try {
-            return qr.update("update category set categoryName=? where categoryId=?",category.getCategoryName(),category.getCategoryId());
+            return qr.update("update category set categoryname=? where categoryid=?",
+                    category.getCategoryName(),category.getCategoryId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

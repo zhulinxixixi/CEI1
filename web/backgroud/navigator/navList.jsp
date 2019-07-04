@@ -13,22 +13,22 @@
         ${navCode}
     </div>
     <div class="data_content">
-        <table class="table table-hover table-bordered">
-            <tr>
-                <th>一级导航序号</th>
+        <table align="center"  class="table table-hover table-bordered">
+            <tr style="color: brown" >
+                <th >一级导航序号</th>
                 <th>导航类别</th>
-                <th>二级导航序号</th>
+                <%--<th>二级导航序号</th>--%>
                 <th>二级导航名称</th>
                 <th>操作</th>
             </tr>
-            <c:forEach items="${columns}" var="c">
+            <c:forEach items="${navs}" var="c">
                 <tr>
                     <td>${c.id}</td>
-                    <td>${c.columnName}</td>
-                    <td>${c.catId}</td>
+                    <td>${c.navName}</td>
+                    <%--<td>${c.catId}</td>--%>
                     <td>${c.categoryName}</td>
                     <td>
-                        <a class="btn btn-mini btn-info" href="${pageContext.request.contextPath}/columnServlet?op=gotoEdit&id=${c.id}">修改</a>
+                        <a class="btn btn-mini btn-info" href="${pageContext.request.contextPath}/navServlet?op=gotoEdit&id=${c.id}">修改</a>
                             <%--<button class="btn btn-mini btn-info" type="button" onclick="javascript:window.location='/columnServlet?op=editColumn&id=${c.id}'">修改</button>&nbsp;&nbsp;--%>
                         <button class="btn btn-mini btn-danger" type="button" onclick="newsDelete(${c.id})">删除</button>
                     </td>
@@ -43,11 +43,8 @@
     function newsDelete(id){
         if(confirm("确认定要删除这个栏目吗？")==true){
 
-            window.location.href="${pageContext.request.contextPath}/columnServlet?op=delColumn&id="+id;
+            window.location.href="${pageContext.request.contextPath}/navServlet?op=delNav&id="+id;
             alert("删除成功!");
-
-
-
         }
     }
 </script>

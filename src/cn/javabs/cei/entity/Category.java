@@ -10,7 +10,7 @@ public class Category {
 
     //getter和setter方法：
     // 私有对象对外访问方式
-    //Getter是对类对象的属性值的获得，
+    //Getter是对类对象的属性值的获得
     //Setter是对类对象的属性的赋值方法。
     public int getCategoryId() {
         return categoryId;

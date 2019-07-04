@@ -3,11 +3,11 @@ use jlnku;
 create table category(
   categoryid int primary key auto_increment,
   categoryname varchar(50),
-  categorydescription varchar(250)
+  categorydescription varchar(2500)
 );
-create table columns(
- columnid int primary key auto_increment,
- columnname varchar(50) not null,
- category_id int,
- foreign key columns (category_id) references category(categoryid)
-);
+create table navs(
+	 id int primary key auto_increment,
+	 navname varchar(50) not null,
+	 category_id int,
+	 foreign key navs (category_id) references category(categoryid)
+	);

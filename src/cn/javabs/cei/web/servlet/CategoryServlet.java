@@ -110,7 +110,7 @@ public class CategoryServlet extends HttpServlet {
 
         System.out.println(category);
 
-        categoryService.addCategory(category);
+//        categoryService.addCategory(category);
 
         try {
             BeanUtils.populate(category,request.getParameterMap());

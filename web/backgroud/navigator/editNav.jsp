@@ -11,12 +11,12 @@
         ${navCode}
     </div>
     <div class="data_content">
-        <form action="${pageContext.request.contextPath}/columnServlet?op=editColumn&id=${column.id}" method="post">
+        <form action="${pageContext.request.contextPath}/navServlet?op=editNav&id=${nav.id}" method="post">
             <table>
                 <tr>
                     <td>栏目名称:</td>
                     <td><input type="text" style="width: 700px; height: 35px; "
-                               id="columnName" name="columnName" value="${column.columnName}"></td>
+                               id="navName" name="navName" value="${nav.navName}"></td>
                 </tr>
                 <tr>
                     <td>导航名称</td>
@@ -25,7 +25,7 @@
 
                         <select style="width: 700px; height: 35px;"  name="catId"   >
 
-                            <option value="${column.catId}">${column.categoryName}</option>
+                            <option value="${nav.catId}">${nav.categoryName}</option>
                             <c:forEach items="${categories}" var="l">
                                 <option value="${l.categoryId}">${l.categoryName}</option>
                             </c:forEach>
@@ -50,7 +50,7 @@
 <script type="text/javascript">
     window.onload=function(){
 
-        var text= document.getElementById("columnName");
+        var text= document.getElementById("navName");
         var Obtn = document.getElementsByTagName("button")
 
 

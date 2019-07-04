@@ -10,8 +10,8 @@
         ${navCode}
     </div>
     <div class="data_content">
-        <table class="table table-hover table-bordered">
-            <tr>
+        <table  align="center" class="table table-hover table-bordered">
+            <tr style="color: brown">
                 <th>序号</th>
                 <th>名称</th>
                 <th>操作</th>
